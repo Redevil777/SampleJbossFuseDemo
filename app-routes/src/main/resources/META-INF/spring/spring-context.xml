@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+         http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/osgi
+        http://www.springframework.org/schema/osgi/spring-osgi-1.2.xsd">
+
+    <context:component-scan base-package="by.app.route"/>
+    <context:annotation-config/>
+
+    <osgi:reference id="sampleProcessor" interface="com.app.processor.SampleProcessor"/>
+    <osgi:reference id="openWeatherProcessor" interface="com.app.processor.OpenWeatherProcessor"/>
+    <osgi:reference id="sendJsonToFreemarker" interface="com.app.processor.ParseJsonToModelProcessor"/>
+
+
+    <camel:camelContext id="routes-context-id"
+                        streamCache="true">
+        <camel:contextScan/>
+        <camel:streamCaching id="cacheConfigId" spoolThreshold="-1"/>
+    </camel:camelContext>
+
+</beans>
